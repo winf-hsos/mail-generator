@@ -17,10 +17,10 @@
 <body>
     <div class="container" id="app">
 
-        <div class="row">
+        <div class="row" id="emailList" hidden>
             <div class="col mx-auto mt-4">
                 <h4 class="mb-4 text-center">
-                    E-Mail Generator Tool
+                    Generate e-mails
                 </h4>
 
                 <ul class="list-group mt-4">
@@ -45,6 +45,25 @@
             </div>
         </div>
 
+        <div class="row" id="sheetKeyPrompt" hidden>
+
+            <div class="col mx-auto mt-4">
+                <h4 class="mb-4 text-center">
+                    Please enter sheet key
+                </h4>
+
+                <p>Please provide a sheet key of your Google Spreadsheet. The sheet must be published to the web.</p>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="inputSheetKey" placeholder="Test">
+                    <label for="inputSheetKey">Google Spreadsheet Key</label>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="submitSheetKey()">Submit</button>
+            </div>
+
+        </div>
+
 
         <!-- Modal for email preview -->
         <div class="modal fade" id="previewModal" tabindex="-1">
@@ -59,7 +78,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="closePreview()">Schließen</button>
-                        <button type="button" class="btn btn-primary" id="previewDownloadBtn" data-mail-id="0" onclick="downloadEmail(this)">Herunterladen</button>
+                        <button type="button" class="btn btn-primary" id="previewDownloadBtn" data-mail-id="0"
+                            onclick="downloadEmail(this)">Herunterladen</button>
                     </div>
                 </div>
             </div>

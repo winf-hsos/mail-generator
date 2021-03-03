@@ -2,9 +2,18 @@ console.log("E-Mail Generator v0.2");
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const sheetKey = urlParams.get('sheetkey');
+var sheetKey = urlParams.get('sheetkey');
 
+var meta, user, emails;
 var previewModal;
+
+if (sheetKey === null) {
+    console.error("Please provide sheet key via url.")
+    noKey();
+
+} else {
+    getData(sheetKey).then(run);
+}
 
 async function getData(sheetKey) {
     return Promise.all([
@@ -14,10 +23,30 @@ async function getData(sheetKey) {
     ])
 }
 
-getData(sheetKey).then(run);
+function noKey() {
+    let sectionInputKey = document.getElementById("sheetKeyPrompt");
+    sectionInputKey.removeAttribute("hidden");
 
-var meta, user, emails;
+    let sectionEmailList = document.getElementById("emailList");
+    sectionEmailList.setAttribute("hidden", "");
+}
+
+function submitSheetKey() {
+    let inputSheetKey = document.getElementById("inputSheetKey");
+    sheetKey = inputSheetKey.value;
+
+    if (sheetKey !== "")
+        window.location.href = "?sheetkey=" + sheetKey;
+
+}
+
 function run(data) {
+
+    let sectionInputKey = document.getElementById("sheetKeyPrompt");
+    sectionInputKey.setAttribute("hidden", "");
+
+    let sectionEmailList = document.getElementById("emailList");
+    sectionEmailList.removeAttribute("hidden");
 
     data = _makeDictFromData(data)
 
@@ -151,7 +180,7 @@ function previewEmail(btn) {
 
     let previewSubjectElement = document.getElementById("previewSubject");
     previewSubjectElement.innerHTML = mail.subject;
-    
+
     let previewContentElement = document.getElementById("previewContent");
     previewContentElement.innerHTML = mail.contentHtml;
 
@@ -206,11 +235,8 @@ function _previewEmail(mail) {
 }
 
 function closePreview() {
-
     previewModal.toggle();
-
 }
-
 
 function _makeDictFromData(data) {
     dataDict = {};
