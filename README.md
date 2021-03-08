@@ -11,7 +11,7 @@ With this tool you can automate emails that you need to send frequently.
 1. Copy the template spreadsheet into your Google account
 2. Edit the users, mails and meta data
 3. Publish the Google spreadsheet and copy the sheet's ID
-4. Paste the ID into the inpt field to generate e-mails.
+4. Paste the ID into the inpt field to generate emails.
 5. Enjoy the benefits of automation 😋
 
 # Live Site

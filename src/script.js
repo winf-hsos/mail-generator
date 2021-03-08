@@ -74,7 +74,6 @@ function run(data) {
         let subject_template = Handlebars.compile(mail.subject);
         mail.subject = subject_template(meta);
 
-
         let content_template = Handlebars.compile(mail.content);
         mail.content = content_template(meta);
 
