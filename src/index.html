@@ -21,18 +21,18 @@
             <div class="col mx-auto mt-4">
                 <h4 class="mb-4 text-center">E-Mails</h4>
                 <span><a href="./" onclick="clearSheetKey()">Change Key</a></span>
-    
+
                 <ul class="list-group mt-4">
                     <li v-for="email in emails" :key="email.id"
                         class="list-group-item d-flex justify-content-between align-items-center">
                         {{ email.title }}
 
                         <div class="btn-toolbar" role="toolbar">
-                            <button type="button" class="btn btn-light  me-2" :data-mail-id="email.id"
+                            <button type="button" class="btn btn-light me-2" :data-mail-id="email.id"
                                 onclick="previewEmail(this)">
                                 <img src="img/preview_email.svg" alt="Preview E-Mail" width="32" height="32">
                             </button>
-
+                      
                             <button type="button" class="btn btn-light" :data-mail-id="email.id"
                                 onclick="downloadEmail(this)">
                                 <img src="img/download_email.svg" alt="Download E-Mail" width="32" height="32">
@@ -61,8 +61,10 @@
                 <button type="button" class="btn btn-primary" onclick="submitSheetKey()">Submit</button>
                 <button type="button" class="btn btn-secondary" onclick="tryTemplateSheet()">Try template sheet</button>
 
-                <div class="mt-4"><a href="https://docs.google.com/spreadsheets/d/1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk/edit?usp=sharing" target="_blank">View template sheet</a></div>
-                
+                <div class="mt-4"><a
+                        href="https://docs.google.com/spreadsheets/d/1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk/edit?usp=sharing"
+                        target="_blank">View template sheet</a></div>
+
             </div>
 
         </div>
@@ -77,12 +79,28 @@
                         <button type="button" class="btn-close" onclick="closePreview()"></button>
                     </div>
                     <div class="modal-body" id="previewContent">
-                        ...
+                        Placeholder
                     </div>
                     <div class="modal-footer">
+
+                        <button type="button" class="btn btn-light me-2" data-mail-id="0" id="previewDownloadBtn"
+                            onclick="copyMailFormattedToClipboard(this)">
+                            <img src="img/copy_email.svg" alt="Copy formatted mail to clipboard" width="28" height="28">
+
+                            <button type="button" class="btn btn-light" data-mail-id="0"
+                                onclick="downloadEmail(this)">
+                                <img src="img/download_email.svg" alt="Download E-Mail" width="32" height="32">
+                            </button>
+
+                        </button>
                         <button type="button" class="btn btn-secondary" onclick="closePreview()">Schließen</button>
+                        
+                        <!--
                         <button type="button" class="btn btn-primary" id="previewDownloadBtn" data-mail-id="0"
                             onclick="downloadEmail(this)">Herunterladen</button>
+
+                        -->
+
                     </div>
                 </div>
             </div>

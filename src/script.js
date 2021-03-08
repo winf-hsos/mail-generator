@@ -5,6 +5,8 @@ const urlParams = new URLSearchParams(queryString);
 var sheetKey = urlParams.get('sheetkey');
 
 var meta, user, emails;
+
+// Initialize preview modal
 var previewModal;
 
 if (sheetKey === null) {
@@ -176,10 +178,7 @@ function downloadEmail(btn) {
     _createEmail(mail.to, mail.subject, mail.contentHtml, mail.cc, mail.bcc);
 }
 
-function previewEmail(btn) {
-    let mailId = btn.dataset.mailId;
-    let mail = emails[mailId];
-
+function _fillPreview(mail) {
     let previewSubjectElement = document.getElementById("previewSubject");
     previewSubjectElement.innerHTML = mail.subject;
 
@@ -188,8 +187,38 @@ function previewEmail(btn) {
 
     let previewDownloadBtnElement = document.getElementById("previewDownloadBtn");
     previewDownloadBtnElement.dataset.mailId = mail.id;
+}
 
+function previewEmail(btn) {
+    let mailId = btn.dataset.mailId;
+    let mail = emails[mailId];
+    _fillPreview(mail);
     _previewEmail(mail);
+}
+
+function copyMailFormattedToClipboard(btn) {
+    let selection = _selectText("previewContent");
+    document.execCommand("copy");
+    selection.removeAllRanges();
+}
+
+function _selectText(elementId) {
+    var doc = document
+    var text = doc.getElementById(elementId);
+    var range, selection;
+
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return selection;
+    }
 }
 
 function _createEmail(to, subject, content, cc = null, bcc = null) {
@@ -224,16 +253,12 @@ function _createAndDownloadMail(content, fileName) {
 }
 
 function _previewEmail(mail) {
-
     previewModal = new bootstrap.Modal(document.getElementById('previewModal'), {
         keyboard: true
     });
 
-    // Set the mail content for preview
-
-    previewModal.toggle();
-
     // Open dialogue
+    previewModal.toggle();
 }
 
 function closePreview() {
