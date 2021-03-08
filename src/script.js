@@ -37,7 +37,10 @@ function submitSheetKey() {
 
     if (sheetKey !== "")
         window.location.href = "?sheetkey=" + sheetKey;
+}
 
+function tryTemplateSheet() {
+    window.location.href = "?sheetkey=1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk";
 }
 
 function run(data) {

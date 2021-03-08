@@ -19,10 +19,9 @@
 
         <div class="row" id="emailList" hidden>
             <div class="col mx-auto mt-4">
-                <h4 class="mb-4 text-center">
-                    E-Mails
-                </h4>
-
+                <h4 class="mb-4 text-center">E-Mails</h4>
+                <span><a href="./" onclick="clearSheetKey()">Change Key</a></span>
+    
                 <ul class="list-group mt-4">
                     <li v-for="email in emails" :key="email.id"
                         class="list-group-item d-flex justify-content-between align-items-center">
@@ -60,6 +59,10 @@
                 </div>
 
                 <button type="button" class="btn btn-primary" onclick="submitSheetKey()">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="tryTemplateSheet()">Try template sheet</button>
+
+                <div class="mt-4"><a href="https://docs.google.com/spreadsheets/d/1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk/edit?usp=sharing" target="_blank">View template sheet</a></div>
+                
             </div>
 
         </div>

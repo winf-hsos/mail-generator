@@ -4,7 +4,7 @@
 
 # What is this?
 
-Coming soon.
+With this tool you can automate emails that you need to send frequently.
 
 # Instructions
 
