@@ -223,6 +223,8 @@ function _selectText(elementId) {
 
 function _createEmail(to, subject, content, cc = null, bcc = null) {
 
+    console.dir(content)
+
     var emlContent = "data:message/rfc822 eml,";
     emlContent += 'To: ' + to + '\n';
     if (cc !== null)
