@@ -14,6 +14,8 @@ if (sheetKey === null) {
     noKey();
 
 } else {
+
+    document.getElementById("linkToSheet").setAttribute("href", `https://docs.google.com/spreadsheets/d/${sheetKey}/edit`);
     getData(sheetKey).then(run);
 }
 
