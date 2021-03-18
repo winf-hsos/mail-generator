@@ -65,18 +65,15 @@ function setSheetKey(newSheetKey) {
     }
 }
 
-
 function tryTemplateSheet() {
     window.location.href = "?sheetkey=1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk";
 }
 
 function tryIndexTemplateSheet() {
-    window.location.href = "?sheetkey=1BkB0Q5bcMM5WlaIlHM4T5oT8ARaGwdwdU_62cTH5VIo";
+    window.location.href = "?sheetkey=1-Zx7KdBwFyh0-FMm1pTlZFlNlxeipU2W9eyjDQIn2L0";
 }
 
 function run(data) {
-
-    //console.dir(data);
 
     // Index sheet, if first (and only) sheet is named "Index"
     if (data[0].title === "Index") {
