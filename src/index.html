@@ -17,10 +17,40 @@
 <body>
     <div class="container" id="app">
 
+        <!-- This is visible if this an index sheet -->
+        <div class="row" id="indexList" hidden>
+            <div class="col mx-auto mt-4">
+                <h4 class="mb-4 text-center">E-Mail Sheet Index</h4>
+
+                <a type="button" href="./" class="btn btn-light">Change Key</a>
+                <a id="linkToIndexSheet" type="button" class="btn btn-light" target="_blank">Open Sheet</a>
+
+                <ul class="list-group mt-4">
+                    <li v-for="sheet in indexSheets" :key="sheet.title"
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ sheet.title }}
+
+                        <div class="btn-toolbar" role="toolbar">
+                            <button type="button" class="btn btn-light me-2" :data-mail-id="sheet.id"
+                                :data-sheet-key="sheet.sheetkey" onclick="openMailSheet(this)">
+                                <img src="img/open.svg" alt="Open E-Mail Generator" width="24" height="24">
+                            </button>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- This is visible if this an email sheet -->
         <div class="row" id="emailList" hidden>
             <div class="col mx-auto mt-4">
                 <h4 class="mb-4 text-center">E-Mails</h4>
-                <span><a href="./" onclick="clearSheetKey()">Change Key</a> | <a id="linkToSheet" target="_blank">Open sheet</a></span>
+
+                <button id="btnBackToIndex" type="button" class="btn btn-light" onclick="backToIndex()" hidden>Back to
+                    Index</button>
+                <a type="button" href="./" class="btn btn-light">Change Key</a>
+                <a id="linkToMailSheet" type="button" class="btn btn-light" target="_blank">Open Sheet</a>
 
                 <ul class="list-group mt-4">
                     <li v-for="email in emails" :key="email.id"
@@ -32,7 +62,7 @@
                                 onclick="previewEmail(this)">
                                 <img src="img/preview_email.svg" alt="Preview E-Mail" width="32" height="32">
                             </button>
-                      
+
                             <button type="button" class="btn btn-light" :data-mail-id="email.id"
                                 onclick="downloadEmail(this)">
                                 <img src="img/download_email.svg" alt="Download E-Mail" width="32" height="32">
@@ -59,11 +89,18 @@
                 </div>
 
                 <button type="button" class="btn btn-primary" onclick="submitSheetKey()">Submit</button>
-                <button type="button" class="btn btn-secondary" onclick="tryTemplateSheet()">Try template sheet</button>
+                <button type="button" class="btn btn-secondary" onclick="tryTemplateSheet()">Try email template
+                    sheet</button>
+                <button type="button" class="btn btn-secondary" onclick="tryIndexTemplateSheet()">Try index template
+                    sheet</button>
 
                 <div class="mt-4"><a
                         href="https://docs.google.com/spreadsheets/d/1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk/edit?usp=sharing"
-                        target="_blank">View template sheet</a></div>
+                        target="_blank">>> View email template sheet</a></div>
+
+                <div><a href="https://docs.google.com/spreadsheets/d/1BkB0Q5bcMM5WlaIlHM4T5oT8ARaGwdwdU_62cTH5VIo/edit?usp=sharing"
+                        target="_blank">>> View index template sheet</a></div>
+
 
             </div>
 
@@ -87,14 +124,13 @@
                             onclick="copyMailFormattedToClipboard(this)">
                             <img src="img/copy_email.svg" alt="Copy formatted mail to clipboard" width="28" height="28">
 
-                            <button type="button" class="btn btn-light" data-mail-id="0"
-                                onclick="downloadEmail(this)">
+                            <button type="button" class="btn btn-light" data-mail-id="0" onclick="downloadEmail(this)">
                                 <img src="img/download_email.svg" alt="Download E-Mail" width="32" height="32">
                             </button>
 
                         </button>
                         <button type="button" class="btn btn-secondary" onclick="closePreview()">Schließen</button>
-                        
+
                         <!--
                         <button type="button" class="btn btn-primary" id="previewDownloadBtn" data-mail-id="0"
                             onclick="downloadEmail(this)">Herunterladen</button>

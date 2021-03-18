@@ -4,7 +4,9 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var sheetKey = urlParams.get('sheetkey');
 
-var meta, user, emails;
+var meta, user, emails, index;
+
+var isIndex = false;
 
 // Initialize preview modal
 var previewModal;
@@ -15,7 +17,8 @@ if (sheetKey === null) {
 
 } else {
 
-    document.getElementById("linkToSheet").setAttribute("href", `https://docs.google.com/spreadsheets/d/${sheetKey}/edit`);
+    document.getElementById("linkToMailSheet").setAttribute("href", `https://docs.google.com/spreadsheets/d/${sheetKey}/edit`);
+    document.getElementById("linkToIndexSheet").setAttribute("href", `https://docs.google.com/spreadsheets/d/${sheetKey}/edit`);
     getData(sheetKey).then(run);
 }
 
@@ -38,24 +41,83 @@ function noKey() {
 function submitSheetKey() {
     let inputSheetKey = document.getElementById("inputSheetKey");
     sheetKey = inputSheetKey.value;
-
-    if (sheetKey !== "")
-        window.location.href = "?sheetkey=" + sheetKey;
+    setSheetKey(sheetKey);
 }
+
+function openMailSheet(btn) {
+    let sheetKey = btn.dataset.sheetKey;
+    setSheetKey(sheetKey);
+}
+
+function backToIndex() {
+    var indexSheetKey = urlParams.get('indexkey');
+    setSheetKey(indexSheetKey);
+}
+
+function setSheetKey(newSheetKey) {
+    if (newSheetKey !== "") {
+        if (index) {
+            window.location.href = "?sheetkey=" + newSheetKey + "&indexkey=" + sheetKey;
+        }
+        else {
+            window.location.href = "?sheetkey=" + newSheetKey;
+        }
+    }
+}
+
 
 function tryTemplateSheet() {
     window.location.href = "?sheetkey=1l1ZvHf3lCBFLUMFXsDCfhEw_z1u1UD63aubOiS8JPSk";
 }
 
+function tryIndexTemplateSheet() {
+    window.location.href = "?sheetkey=1BkB0Q5bcMM5WlaIlHM4T5oT8ARaGwdwdU_62cTH5VIo";
+}
+
 function run(data) {
+
+    //console.dir(data);
+
+    // Index sheet, if first (and only) sheet is named "Index"
+    if (data[0].title === "Index") {
+        console.info("This is an index sheet.");
+        data = [data.shift()];
+        isIndex = true;
+    }
 
     let sectionInputKey = document.getElementById("sheetKeyPrompt");
     sectionInputKey.setAttribute("hidden", "");
 
-    let sectionEmailList = document.getElementById("emailList");
-    sectionEmailList.removeAttribute("hidden");
-
     data = _makeDictFromData(data)
+
+    if (!isIndex) {
+        mailSheet(data);
+
+        let sectionEmailList = document.getElementById("emailList");
+        sectionEmailList.removeAttribute("hidden");
+
+        document.getElementById("btnBackToIndex").removeAttribute("hidden");
+    }
+    else {
+        indexSheet(data);
+
+        let sectionEmailIndexList = document.getElementById("indexList");
+        sectionEmailIndexList.removeAttribute("hidden");
+
+    }
+
+    app = new Vue({
+        el: '#app',
+        data: {
+            emails: emails,
+            indexSheets: index
+        }
+    })
+}
+
+
+// Run if this is a mail sheet
+function mailSheet(data) {
 
     // Prepare meta data
     meta = data["meta"];
@@ -123,14 +185,15 @@ function run(data) {
         mail.bcc = bccString == "" ? null : bccString;
 
     }
+}
 
-    app = new Vue({
-        el: '#app',
-        data: {
-            emails: emails,
-            activemail: emails[0]
-        }
-    })
+// Run if this is an index sheet
+function indexSheet(data) {
+    index = [];
+    let indexRaw = data["index"];
+    for (let i = 0; i < indexRaw.length; i++) {
+        index.push(indexRaw[i]);
+    }
 }
 
 async function readSheetData(workbookId, sheetNumber) {
