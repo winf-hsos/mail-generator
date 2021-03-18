@@ -92,8 +92,9 @@ function run(data) {
 
         let sectionEmailList = document.getElementById("emailList");
         sectionEmailList.removeAttribute("hidden");
-
-        document.getElementById("btnBackToIndex").removeAttribute("hidden");
+        
+        if (urlParams.get('indexkey') !== null)
+            document.getElementById("btnBackToIndex").removeAttribute("hidden");
     }
     else {
         indexSheet(data);
