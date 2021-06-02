@@ -250,6 +250,9 @@ function _fillPreview(mail) {
 
     let previewDownloadBtnElement = document.getElementById("previewDownloadBtn");
     previewDownloadBtnElement.dataset.mailId = mail.id;
+
+    let previewCopyContentBtnElement = document.getElementById("previewCopyContentBtn");
+    previewCopyContentBtnElement.dataset.mailId = mail.id;
 }
 
 function previewEmail(btn) {
