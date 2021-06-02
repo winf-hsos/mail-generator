@@ -137,7 +137,7 @@ function mailSheet(data) {
 
         let subject_template = Handlebars.compile(mail.subject);
         mail.subject = subject_template(meta);
-
+        
         let content_template = Handlebars.compile(mail.content);
         mail.content = content_template(meta);
 
@@ -302,6 +302,8 @@ function _createEmail(to, subject, content, cc = null, bcc = null) {
     emlContent += 'Content-Type: text/html; charset=UTF-8' + '\n';
     emlContent += '' + '\n';
     emlContent += content;
+
+    console.dir(emlContent);
 
     _createAndDownloadMail(emlContent, subject + '.eml')
 }
